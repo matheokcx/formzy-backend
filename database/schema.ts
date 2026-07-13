@@ -32,6 +32,69 @@ export class AuthAccessTokenSchema extends BaseModel {
   declare updatedAt: DateTime | null
 }
 
+export class FormReplySchema extends BaseModel {
+  static $columns = ['createdAt', 'formId', 'id', 'replies', 'updatedAt'] as const
+  $columns = FormReplySchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare formId: number
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare replies: any
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+}
+
+export class FormThemeSchema extends BaseModel {
+  static $columns = ['createdAt', 'ctaText', 'font', 'id', 'name', 'primaryColor', 'secondaryColor', 'updatedAt', 'userId'] as const
+  $columns = FormThemeSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare ctaText: string | null
+  @column()
+  declare font: string | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare name: string
+  @column()
+  declare primaryColor: string
+  @column()
+  declare secondaryColor: string | null
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+  @column()
+  declare userId: number
+}
+
+export class FormSchema extends BaseModel {
+  static $columns = ['createdAt', 'description', 'fields', 'formThemeId', 'id', 'isClosed', 'isPrivate', 'name', 'updatedAt', 'userId'] as const
+  $columns = FormSchema.$columns
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime | null
+  @column()
+  declare description: string | null
+  @column()
+  declare fields: any
+  @column()
+  declare formThemeId: number | null
+  @column({ isPrimary: true })
+  declare id: number
+  @column()
+  declare isClosed: boolean
+  @column()
+  declare isPrivate: boolean
+  @column()
+  declare name: string
+  @column.dateTime({ autoCreate: true, autoUpdate: true })
+  declare updatedAt: DateTime | null
+  @column()
+  declare userId: number
+}
+
 export class RateLimitSchema extends BaseModel {
   static $columns = ['expire', 'key', 'points'] as const
   $columns = RateLimitSchema.$columns

@@ -1,0 +1,23 @@
+info:
+  name: createFormReply
+  type: http
+  seq: 2
+
+http:
+  method: POST
+  url: "{{base-url}}/form-replies/1"
+  body:
+    type: json
+    data: |
+      {
+        "replies": {
+          "champ_1": "Test"
+        }
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

@@ -3,8 +3,8 @@ color: "#2E8A54"
 variables:
   - name: base-url
     value: http://localhost:3333/api
-  - secret: true
-    name: email
+  - name: email
+    value: matheo.deleplanque@gmail.com
   - secret: true
     name: password
   - secret: true
