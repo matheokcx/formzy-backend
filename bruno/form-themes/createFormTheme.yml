@@ -1,0 +1,22 @@
+info:
+  name: createFormTheme
+  type: http
+  seq: 3
+
+http:
+  method: POST
+  url: "{{base-url}}/form-themes"
+  body:
+    type: json
+    data: |
+      {
+        "name": "Thème 1",
+        "primaryColor": "#FF0000"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5

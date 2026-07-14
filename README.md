@@ -12,6 +12,8 @@
 ```bash
 npm install
 cp .env.example .env
-cp .env.example .env.local
+node ace generate:key
+cp .env .env.local
+node ace migration:run
 npm run dev
 ```

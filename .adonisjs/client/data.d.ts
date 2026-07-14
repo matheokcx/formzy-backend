@@ -5,9 +5,24 @@
 
 /// <reference path="./manifest.d.ts" />
 import type { InferData, InferVariants } from '@adonisjs/core/types/transformers'
+import type FormReplyTransformer from '#transformers/form_reply_transformer'
+import type FormThemeTransformer from '#transformers/form_theme_transformer'
+import type FormTransformer from '#transformers/form_transformer'
 import type UserTransformer from '#transformers/user_transformer'
 
 export namespace Data {
+  export type FormReply = InferData<FormReplyTransformer>
+  export namespace FormReply {
+    export type Variants = InferVariants<FormReplyTransformer>
+  }
+  export type FormTheme = InferData<FormThemeTransformer>
+  export namespace FormTheme {
+    export type Variants = InferVariants<FormThemeTransformer>
+  }
+  export type Form = InferData<FormTransformer>
+  export namespace Form {
+    export type Variants = InferVariants<FormTransformer>
+  }
   export type User = InferData<UserTransformer>
   export namespace User {
     export type Variants = InferVariants<UserTransformer>
