@@ -5,6 +5,9 @@
 
 export const controllers = {
   AccessTokens: () => import('#controllers/access_tokens_controller'),
+  FormReplies: () => import('#controllers/form_replies_controller'),
+  FormThemes: () => import('#controllers/form_themes_controller'),
+  Forms: () => import('#controllers/forms_controller'),
   NewAccount: () => import('#controllers/new_account_controller'),
   Profile: () => import('#controllers/profile_controller'),
 }

@@ -23,4 +23,24 @@ export interface ApiDefinition {
       destroy: typeof routes['profile.access_tokens.destroy']
     }
   }
+  forms: {
+    forms: {
+      index: typeof routes['forms.forms.index']
+      indexByUser: typeof routes['forms.forms.index_by_user']
+      store: typeof routes['forms.forms.store']
+      update: typeof routes['forms.forms.update']
+      destroy: typeof routes['forms.forms.destroy']
+    }
+    formThemes: {
+      index: typeof routes['forms.form_themes.index']
+      indexByUser: typeof routes['forms.form_themes.index_by_user']
+      store: typeof routes['forms.form_themes.store']
+      update: typeof routes['forms.form_themes.update']
+      destroy: typeof routes['forms.form_themes.destroy']
+    }
+    formReplies: {
+      index: typeof routes['forms.form_replies.index']
+      store: typeof routes['forms.form_replies.store']
+    }
+  }
 }

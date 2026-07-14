@@ -31,5 +31,36 @@ router
       .prefix('account')
       .as('profile')
       .use(middleware.auth())
+
+    router
+      .group(() => {
+        router.get('forms', [controllers.Forms, 'index'])
+        router.get('forms/:userId', [controllers.Forms, 'indexByUser'])
+        router.post('forms', [controllers.Forms, 'store'])
+        router.patch('forms/:id', [controllers.Forms, 'update'])
+        router.delete('forms/:id', [controllers.Forms, 'destroy'])
+      })
+      .as('forms')
+      .use(middleware.auth())
+
+    router
+      .group(() => {
+        router.get('form-themes', [controllers.FormThemes, 'index'])
+        router.get('form-themes/:userId', [controllers.FormThemes, 'indexByUser'])
+        router.post('form-themes', [controllers.FormThemes, 'store'])
+        router.patch('form-themes/:id', [controllers.FormThemes, 'update'])
+        router.delete('form-themes/:id', [controllers.FormThemes, 'destroy'])
+      })
+      .as('form-themes')
+      .use(middleware.auth())
+
+    router
+      .group(() => {
+        router.get('form-replies/:formId', [controllers.FormReplies, 'index'])
+      })
+      .as('form-replies')
+      .use(middleware.auth())
+
+    router.post('form-replies/:formId', [controllers.FormReplies, 'store'])
   })
   .prefix('/api')
