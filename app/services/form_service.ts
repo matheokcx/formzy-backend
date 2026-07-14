@@ -14,15 +14,29 @@ type CreateFormPayload = {
 
 export default class FormService {
   list(page: number, perPage: number) {
-    return Form.query().orderBy('id', 'desc').paginate(page, perPage)
+    return Form.query()
+      .preload('user')
+      .preload('formTheme')
+      .orderBy('id', 'desc')
+      .paginate(page, perPage)
   }
 
   listByUser(userId: number, page: number, perPage: number) {
-    return Form.query().where('userId', userId).orderBy('id', 'desc').paginate(page, perPage)
+    return Form.query()
+      .where('userId', userId)
+      .preload('user')
+      .preload('formTheme')
+      .orderBy('id', 'desc')
+      .paginate(page, perPage)
   }
 
   show(id: number): Promise<Form> {
-    return Form.query().where('id', id).where('isPrivate', false).preload('formTheme').firstOrFail()
+    return Form.query()
+      .where('id', id)
+      .where('isPrivate', false)
+      .preload('user')
+      .preload('formTheme')
+      .firstOrFail()
   }
 
   create(payload: CreateFormPayload, user: User): Promise<Form> {

@@ -1,5 +1,5 @@
 import type { HttpContext } from '@adonisjs/core/http'
-import type FormService from '#services/form_service'
+import FormService from '#services/form_service'
 import FormTransformer from '#transformers/form_transformer'
 import { createFormValidator, updateFormValidator } from '#validators/form'
 import type Form from '#models/form'

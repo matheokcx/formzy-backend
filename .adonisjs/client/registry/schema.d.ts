@@ -81,7 +81,7 @@ export interface Registry {
   }
   'forms.forms.index_by_user': {
     methods: ["GET","HEAD"]
-    pattern: '/api/forms/:userId'
+    pattern: '/api/forms/user/:userId'
     types: {
       body: {}
       paramsTuple: [ParamValue]
@@ -127,7 +127,7 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/forms_controller').default['destroy']>>>
     }
   }
-  'forms.form_themes.index': {
+  'form-themes.form_themes.index': {
     methods: ["GET","HEAD"]
     pattern: '/api/form-themes'
     types: {
@@ -139,7 +139,7 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/form_themes_controller').default['index']>>>
     }
   }
-  'forms.form_themes.index_by_user': {
+  'form-themes.form_themes.index_by_user': {
     methods: ["GET","HEAD"]
     pattern: '/api/form-themes/:userId'
     types: {
@@ -151,7 +151,7 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/form_themes_controller').default['indexByUser']>>>
     }
   }
-  'forms.form_themes.store': {
+  'form-themes.form_themes.store': {
     methods: ["POST"]
     pattern: '/api/form-themes'
     types: {
@@ -163,7 +163,7 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/form_themes_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
-  'forms.form_themes.update': {
+  'form-themes.form_themes.update': {
     methods: ["PATCH"]
     pattern: '/api/form-themes/:id'
     types: {
@@ -175,7 +175,7 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/form_themes_controller').default['update']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
-  'forms.form_themes.destroy': {
+  'form-themes.form_themes.destroy': {
     methods: ["DELETE"]
     pattern: '/api/form-themes/:id'
     types: {
@@ -187,7 +187,7 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/form_themes_controller').default['destroy']>>>
     }
   }
-  'forms.form_replies.index': {
+  'form-replies.form_replies.index': {
     methods: ["GET","HEAD"]
     pattern: '/api/form-replies/:formId'
     types: {
@@ -199,7 +199,7 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/form_replies_controller').default['index']>>>
     }
   }
-  'forms.form_replies.store': {
+  'form_replies.store': {
     methods: ["POST"]
     pattern: '/api/form-replies/:formId'
     types: {
@@ -209,6 +209,18 @@ export interface Registry {
       query: ExtractQuery<InferInput<(typeof import('#validators/form_reply').createFormReplyValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/form_replies_controller').default['store']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/form_replies_controller').default['store']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'forms.show': {
+    methods: ["GET","HEAD"]
+    pattern: '/api/forms/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: {}
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/forms_controller').default['show']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/forms_controller').default['show']>>>
     }
   }
 }

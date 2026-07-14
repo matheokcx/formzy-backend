@@ -13,11 +13,15 @@ type CreateFormThemePayload = {
 
 export default class FormThemeService {
   list(page: number, perPage: number) {
-    return FormTheme.query().orderBy('id', 'desc').paginate(page, perPage)
+    return FormTheme.query().preload('user').orderBy('id', 'desc').paginate(page, perPage)
   }
 
   listByUser(userId: number, page: number, perPage: number) {
-    return FormTheme.query().where('userId', userId).orderBy('id', 'desc').paginate(page, perPage)
+    return FormTheme.query()
+      .where('userId', userId)
+      .preload('user')
+      .orderBy('id', 'desc')
+      .paginate(page, perPage)
   }
 
   create(payload: CreateFormThemePayload, user: User): Promise<FormTheme> {

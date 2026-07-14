@@ -15,7 +15,7 @@ export default class FormThemeTransformer extends BaseTransformer<FormTheme> {
         'createdAt',
         'updatedAt',
       ]),
-      user: UserTransformer.transform(this.resource.user),
+      user: UserTransformer.transform(this.whenLoaded(this.resource.user)),
     }
   }
 }

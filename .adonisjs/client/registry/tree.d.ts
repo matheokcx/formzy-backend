@@ -31,16 +31,21 @@ export interface ApiDefinition {
       update: typeof routes['forms.forms.update']
       destroy: typeof routes['forms.forms.destroy']
     }
+    show: typeof routes['forms.show']
+  }
+  formThemes: {
     formThemes: {
-      index: typeof routes['forms.form_themes.index']
-      indexByUser: typeof routes['forms.form_themes.index_by_user']
-      store: typeof routes['forms.form_themes.store']
-      update: typeof routes['forms.form_themes.update']
-      destroy: typeof routes['forms.form_themes.destroy']
+      index: typeof routes['form-themes.form_themes.index']
+      indexByUser: typeof routes['form-themes.form_themes.index_by_user']
+      store: typeof routes['form-themes.form_themes.store']
+      update: typeof routes['form-themes.form_themes.update']
+      destroy: typeof routes['form-themes.form_themes.destroy']
     }
+  }
+  formReplies: {
     formReplies: {
-      index: typeof routes['forms.form_replies.index']
-      store: typeof routes['forms.form_replies.store']
+      index: typeof routes['form-replies.form_replies.index']
     }
+    store: typeof routes['form_replies.store']
   }
 }
