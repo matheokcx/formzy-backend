@@ -8,7 +8,18 @@ import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
 export class AuthAccessTokenSchema extends BaseModel {
-  static $columns = ['abilities', 'createdAt', 'expiresAt', 'hash', 'id', 'lastUsedAt', 'name', 'tokenableId', 'type', 'updatedAt'] as const
+  static $columns = [
+    'abilities',
+    'createdAt',
+    'expiresAt',
+    'hash',
+    'id',
+    'lastUsedAt',
+    'name',
+    'tokenableId',
+    'type',
+    'updatedAt',
+  ] as const
   $columns = AuthAccessTokenSchema.$columns
   @column()
   declare abilities: string
@@ -50,7 +61,17 @@ export class FormReplySchema extends BaseModel {
 }
 
 export class FormThemeSchema extends BaseModel {
-  static $columns = ['createdAt', 'ctaText', 'font', 'id', 'name', 'primaryColor', 'secondaryColor', 'updatedAt', 'userId'] as const
+  static $columns = [
+    'createdAt',
+    'ctaText',
+    'font',
+    'id',
+    'name',
+    'primaryColor',
+    'secondaryColor',
+    'updatedAt',
+    'userId',
+  ] as const
   $columns = FormThemeSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime | null
@@ -73,7 +94,18 @@ export class FormThemeSchema extends BaseModel {
 }
 
 export class FormSchema extends BaseModel {
-  static $columns = ['createdAt', 'description', 'fields', 'formThemeId', 'id', 'isClosed', 'isPrivate', 'name', 'updatedAt', 'userId'] as const
+  static $columns = [
+    'createdAt',
+    'description',
+    'fields',
+    'formThemeId',
+    'id',
+    'isClosed',
+    'isPrivate',
+    'name',
+    'updatedAt',
+    'userId',
+  ] as const
   $columns = FormSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime | null
@@ -109,7 +141,15 @@ export class RateLimitSchema extends BaseModel {
 }
 
 export class UserSchema extends BaseModel {
-  static $columns = ['createdAt', 'email', 'fullName', 'id', 'password', 'role', 'updatedAt'] as const
+  static $columns = [
+    'createdAt',
+    'email',
+    'fullName',
+    'id',
+    'password',
+    'role',
+    'updatedAt',
+  ] as const
   $columns = UserSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
