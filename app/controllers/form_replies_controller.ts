@@ -24,7 +24,11 @@ export default class FormRepliesController {
 
   async store({ params, request, response, serialize }: HttpContext) {
     const payload = await request.validateUsing(createFormReplyValidator)
-    const formReply: FormReply = await this.formReplyService.create(payload, params.formId)
+    const formReply: FormReply = await this.formReplyService.create(
+      payload,
+      params.formId,
+      request.ip()
+    )
 
     return response.created(await serialize(FormReplyTransformer.transform(formReply)))
   }
