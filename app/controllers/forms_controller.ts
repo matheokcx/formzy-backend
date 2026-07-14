@@ -25,6 +25,11 @@ export default class FormsController {
     return serialize(FormTransformer.paginate(forms.all(), forms.getMeta()))
   }
 
+  async show({ params, serialize }: HttpContext) {
+    const form: Form = await this.formService.show(params.id)
+    return serialize(FormTransformer.transform(form))
+  }
+
   async store({ request, auth, response, serialize }: HttpContext) {
     const payload = await request.validateUsing(createFormValidator)
     const form: Form = await this.formService.create(payload, auth.getUserOrFail())

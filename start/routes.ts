@@ -35,7 +35,7 @@ router
     router
       .group(() => {
         router.get('forms', [controllers.Forms, 'index'])
-        router.get('forms/:userId', [controllers.Forms, 'indexByUser'])
+        router.get('forms/user/:userId', [controllers.Forms, 'indexByUser'])
         router.post('forms', [controllers.Forms, 'store'])
         router.patch('forms/:id', [controllers.Forms, 'update'])
         router.delete('forms/:id', [controllers.Forms, 'destroy'])
@@ -62,5 +62,6 @@ router
       .use(middleware.auth())
 
     router.post('form-replies/:formId', [controllers.FormReplies, 'store'])
+    router.get('forms/:id', [controllers.Forms, 'show'])
   })
   .prefix('/api')

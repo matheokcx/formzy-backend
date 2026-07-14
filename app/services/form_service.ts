@@ -21,6 +21,10 @@ export default class FormService {
     return Form.query().where('userId', userId).orderBy('id', 'desc').paginate(page, perPage)
   }
 
+  show(id: number): Promise<Form> {
+    return Form.query().where('id', id).where('isPrivate', false).preload('formTheme').firstOrFail()
+  }
+
   create(payload: CreateFormPayload, user: User): Promise<Form> {
     return Form.create({ ...payload, userId: user.id })
   }
