@@ -1,17 +1,17 @@
 import Form from '#models/form'
 import FormReply from '#models/form_reply'
-import type User from '#models/user'
+import type { HttpContext } from '@adonisjs/core/http'
 import { Exception } from '@adonisjs/core/exceptions'
-import { assertOwnership } from '#exceptions/forbidden_exception'
+import FormReplyPolicy from '#policies/form_reply_policy'
 
 type CreateFormReplyPayload = {
   replies: Record<string, unknown>
 }
 
 export default class FormReplyService {
-  async listByForm(user: User, formId: number, page: number, perPage: number) {
+  async listByForm(bouncer: HttpContext['bouncer'], formId: number, page: number, perPage: number) {
     const form = await Form.findOrFail(formId)
-    assertOwnership(user, form.userId)
+    await bouncer.with(FormReplyPolicy).authorize('view', form)
 
     return FormReply.query().where('formId', form.id).orderBy('id', 'desc').paginate(page, perPage)
   }

@@ -36,19 +36,15 @@ export default class FormThemesController {
     return response.created(await serialize(FormThemeTransformer.transform(formTheme)))
   }
 
-  async update({ params, request, auth, serialize }: HttpContext) {
+  async update({ params, request, bouncer, serialize }: HttpContext) {
     const payload = await request.validateUsing(updateFormThemeValidator)
-    const formTheme: FormTheme = await this.formThemeService.update(
-      payload,
-      params.id,
-      auth.getUserOrFail()
-    )
+    const formTheme: FormTheme = await this.formThemeService.update(payload, params.id, bouncer)
 
     return serialize(FormThemeTransformer.transform(formTheme))
   }
 
-  async destroy({ params, auth, response }: HttpContext) {
-    await this.formThemeService.destroy(params.id, auth.getUserOrFail())
+  async destroy({ params, bouncer, response }: HttpContext) {
+    await this.formThemeService.destroy(params.id, bouncer)
     return response.noContent()
   }
 }

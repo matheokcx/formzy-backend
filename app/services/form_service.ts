@@ -1,6 +1,7 @@
 import Form from '#models/form'
 import type User from '#models/user'
-import { assertOwnership } from '#exceptions/forbidden_exception'
+import type { HttpContext } from '@adonisjs/core/http'
+import FormPolicy from '#policies/form_policy'
 
 type CreateFormPayload = {
   name: string
@@ -24,17 +25,21 @@ export default class FormService {
     return Form.create({ ...payload, userId: user.id })
   }
 
-  async update(payload: Partial<CreateFormPayload>, id: number, user: User): Promise<Form> {
+  async update(
+    payload: Partial<CreateFormPayload>,
+    id: number,
+    bouncer: HttpContext['bouncer']
+  ): Promise<Form> {
     const form: Form = await Form.findOrFail(id)
-    assertOwnership(user, form.userId)
+    await bouncer.with(FormPolicy).authorize('update', form)
     await form.merge(payload).save()
 
     return form
   }
 
-  async destroy(id: number, user: User): Promise<void> {
+  async destroy(id: number, bouncer: HttpContext['bouncer']): Promise<void> {
     const form: Form = await Form.findOrFail(id)
-    assertOwnership(user, form.userId)
+    await bouncer.with(FormPolicy).authorize('destroy', form)
     await form.delete()
   }
 }

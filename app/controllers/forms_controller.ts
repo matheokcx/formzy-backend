@@ -32,15 +32,15 @@ export default class FormsController {
     return response.created(await serialize(FormTransformer.transform(form)))
   }
 
-  async update({ params, request, auth, serialize }: HttpContext) {
+  async update({ params, request, bouncer, serialize }: HttpContext) {
     const payload = await request.validateUsing(updateFormValidator)
-    const form: Form = await this.formService.update(payload, params.id, auth.getUserOrFail())
+    const form: Form = await this.formService.update(payload, params.id, bouncer)
 
     return serialize(FormTransformer.transform(form))
   }
 
-  async destroy({ params, auth, response }: HttpContext) {
-    await this.formService.destroy(params.id, auth.getUserOrFail())
+  async destroy({ params, bouncer, response }: HttpContext) {
+    await this.formService.destroy(params.id, bouncer)
     return response.noContent()
   }
 }

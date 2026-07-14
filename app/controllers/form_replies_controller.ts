@@ -9,11 +9,11 @@ import FormReply from '#models/form_reply'
 export default class FormRepliesController {
   public constructor(private formReplyService: FormReplyService) {}
 
-  async index({ params, request, auth, serialize }: HttpContext) {
+  async index({ params, request, bouncer, serialize }: HttpContext) {
     const pageNumber: number = Number(request.input('page', 1))
     const quantityPerPage: number = Number(request.input('perPage', 20))
     const replies = await this.formReplyService.listByForm(
-      auth.getUserOrFail(),
+      bouncer,
       params.formId,
       pageNumber,
       quantityPerPage

@@ -1,6 +1,7 @@
 import FormTheme from '#models/form_theme'
 import type User from '#models/user'
-import { assertOwnership } from '#exceptions/forbidden_exception'
+import type { HttpContext } from '@adonisjs/core/http'
+import FormThemePolicy from '#policies/form_theme_policy'
 
 type CreateFormThemePayload = {
   name: string
@@ -26,18 +27,18 @@ export default class FormThemeService {
   async update(
     payload: Partial<CreateFormThemePayload>,
     id: number,
-    user: User
+    bouncer: HttpContext['bouncer']
   ): Promise<FormTheme> {
     const formTheme: FormTheme = await FormTheme.findOrFail(id)
-    assertOwnership(user, formTheme.userId)
+    await bouncer.with(FormThemePolicy).authorize('update', formTheme)
     await formTheme.merge(payload).save()
 
     return formTheme
   }
 
-  async destroy(id: number, user: User): Promise<void> {
+  async destroy(id: number, bouncer: HttpContext['bouncer']): Promise<void> {
     const formTheme: FormTheme = await FormTheme.findOrFail(id)
-    assertOwnership(user, formTheme.userId)
+    await bouncer.with(FormThemePolicy).authorize('destroy', formTheme)
     await formTheme.delete()
   }
 }
