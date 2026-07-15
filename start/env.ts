@@ -52,9 +52,9 @@ export default await Env.create(new URL('../', import.meta.url), {
   | Variables for configuring the mail package
   |----------------------------------------------------------
   */
-  MAIL_MAILER: Env.schema.enum(['smtp'] as const),
-  MAIL_FROM_NAME: Env.schema.string(),
-  MAIL_FROM_ADDRESS: Env.schema.string(),
-  SMTP_HOST: Env.schema.string(),
-  SMTP_PORT: Env.schema.number(),
+  MAIL_MAILER: Env.schema.enum.optional(['smtp'] as const),
+  MAIL_FROM_NAME: Env.schema.string.optional(),
+  MAIL_FROM_ADDRESS: Env.schema.string.optional(),
+  SMTP_HOST: Env.schema.string.optional(),
+  SMTP_PORT: Env.schema.number.optional(),
 })

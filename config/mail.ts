@@ -2,7 +2,7 @@ import env from '#start/env'
 import { defineConfig, transports } from '@adonisjs/mail'
 
 const mailConfig = defineConfig({
-  default: env.get('MAIL_MAILER'),
+  default: env.get('MAIL_MAILER', 'smtp'),
 
   /**
    * The mailers object can be used to configure multiple mailers
@@ -10,8 +10,8 @@ const mailConfig = defineConfig({
    * options.
    */
   from: {
-    address: env.get('MAIL_FROM_ADDRESS'),
-    name: env.get('MAIL_FROM_NAME'),
+    address: env.get('MAIL_FROM_ADDRESS', 'noreply@localhost'),
+    name: env.get('MAIL_FROM_NAME', 'Formzy'),
   },
 
   /**
@@ -32,8 +32,8 @@ const mailConfig = defineConfig({
    */
   mailers: {
     smtp: transports.smtp({
-      host: env.get('SMTP_HOST'),
-      port: env.get('SMTP_PORT'),
+      host: env.get('SMTP_HOST', 'localhost'),
+      port: env.get('SMTP_PORT', 587),
       /**
        * Uncomment the auth block if your SMTP
        * server needs authentication
