@@ -111,7 +111,7 @@ jobs:
             DB_PASSWORD=${DB_PASSWORD}
             DB_DATABASE=${DB_DATABASE}
             LIMITER_STORE=database
-            MAIL_MAILER=resend
+            MAIL_MAILER=smtp
             MAIL_FROM_NAME=${MAIL_FROM_NAME}
             MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS}
             SMTP_HOST=localhost
