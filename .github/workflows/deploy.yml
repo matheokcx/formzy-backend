@@ -91,6 +91,7 @@ jobs:
           envs: GHCR_TOKEN,APP_KEY,APP_URL,CORS_ORIGIN,DB_USER,DB_PASSWORD,DB_DATABASE,MAIL_FROM_NAME,MAIL_FROM_ADDRESS,RESEND_API_KEY
           script: |
             set -e
+            mkdir -p "${{ secrets.VPS_APP_PATH }}"
             cd "${{ secrets.VPS_APP_PATH }}"
 
             cat > .env <<EOF
@@ -115,7 +116,6 @@ jobs:
             MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS}
             SMTP_HOST=localhost
             SMTP_PORT=587
-            RESEND_API_KEY=${RESEND_API_KEY}
             EOF
 
             echo "${GHCR_TOKEN}" | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
