@@ -5,18 +5,12 @@ info:
 
 http:
   method: PATCH
-  url: "{{base-url}}/forms/1"
+  url: "{{base-url}}/forms/36"
   body:
     type: json
     data: |
       {
-        "name": "Premier formulaire modifié",
-        "description": "Voici la description de mon formulaire modifiée",
-        "fields": {
-          "champ_1": {
-            "label": "Champ 1"
-          }
-        }
+        "isClosed": true
       }
   auth: inherit
 

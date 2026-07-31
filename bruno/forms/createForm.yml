@@ -10,7 +10,7 @@ http:
     type: json
     data: |
       {
-        "name": "Premier formulaire",
+        "name": "Deuxième formulaire",
         "description": "Voici la description de mon formulaire",
         "fields": {
           "champ_1": {

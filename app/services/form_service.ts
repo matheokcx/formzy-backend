@@ -31,12 +31,7 @@ export default class FormService {
   }
 
   show(id: number): Promise<Form> {
-    return Form.query()
-      .where('id', id)
-      .where('isPrivate', false)
-      .preload('user')
-      .preload('formTheme')
-      .firstOrFail()
+    return Form.query().where('id', id).preload('user').preload('formTheme').firstOrFail()
   }
 
   create(payload: CreateFormPayload, user: User): Promise<Form> {
