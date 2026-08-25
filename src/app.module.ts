@@ -1,0 +1,42 @@
+import { Module } from '@nestjs/common';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { FormThemeModule } from './form-theme/form-theme.module';
+import { UserModule } from './user/user.module';
+import { FormModule } from './form/form.module';
+import { FormReplyModule } from './form-reply/form-reply.module';
+import { DataSource } from 'typeorm';
+
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: ['.env', '.env.local'],
+    }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => ({
+        type: 'postgres',
+        host: configService.get('DB_HOST'),
+        port: configService.get('DB_PORT'),
+        username: configService.get('DB_USER'),
+        password: configService.get('DB_PASSWORD'),
+        database: configService.get('DB_NAME'),
+        autoLoadEntities: true,
+        synchronize: false,
+        migrations: [__dirname + '/migrations/**/*{.js,.ts}'],
+      }),
+      inject: [ConfigService],
+    }),
+    FormModule,
+    UserModule,
+    FormThemeModule,
+    FormReplyModule,
+  ],
+  controllers: [AppController],
+  providers: [AppService],
+})
+export class AppModule {
+  constructor(private dataSource: DataSource) {}
+}
