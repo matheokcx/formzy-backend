@@ -8,6 +8,7 @@ import { UserModule } from './user/user.module';
 import { FormModule } from './form/form.module';
 import { FormReplyModule } from './form-reply/form-reply.module';
 import { DataSource } from 'typeorm';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -33,6 +34,7 @@ import { DataSource } from 'typeorm';
     UserModule,
     FormThemeModule,
     FormReplyModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
