@@ -16,7 +16,7 @@ export class FormReply {
   @Column()
   ipHash: string;
 
-  @Column('simple-json')
+  @Column('jsonb')
   replies: any;
 
   @ManyToOne(() => Form, (form) => form.formReplies)

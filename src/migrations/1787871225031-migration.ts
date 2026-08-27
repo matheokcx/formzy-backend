@@ -1,7 +1,7 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class Migration1787697980219 implements MigrationInterface {
-  name = 'Migration1787697980219';
+export class Migration1787871225031 implements MigrationInterface {
+  name = 'Migration1787871225031';
 
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(
@@ -14,10 +14,10 @@ export class Migration1787697980219 implements MigrationInterface {
       `CREATE TABLE "user" ("id" SERIAL NOT NULL, "fullName" character varying NOT NULL, "email" character varying NOT NULL, "password" character varying NOT NULL, "role" "public"."user_role_enum" NOT NULL DEFAULT 'user', "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), CONSTRAINT "PK_cace4a159ff9f2512dd42373760" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "form_reply" ("id" SERIAL NOT NULL, "ipHash" character varying NOT NULL, "replies" text NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "formId" integer, CONSTRAINT "PK_d67abd5b8cc79d80eb22e7dbfdf" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "form_reply" ("id" SERIAL NOT NULL, "ipHash" character varying NOT NULL, "replies" jsonb NOT NULL, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "formId" integer, CONSTRAINT "PK_d67abd5b8cc79d80eb22e7dbfdf" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
-      `CREATE TABLE "form" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "description" character varying, "fields" text NOT NULL, "isPrivate" boolean NOT NULL, "isClosed" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "userId" integer, "formThemeId" integer, CONSTRAINT "PK_8f72b95aa2f8ba82cf95dc7579e" PRIMARY KEY ("id"))`,
+      `CREATE TABLE "form" ("id" SERIAL NOT NULL, "name" character varying NOT NULL, "description" character varying, "fields" jsonb NOT NULL, "isPrivate" boolean NOT NULL, "isClosed" boolean NOT NULL DEFAULT false, "createdAt" TIMESTAMP NOT NULL DEFAULT now(), "updatedAt" TIMESTAMP NOT NULL DEFAULT now(), "userId" integer, "formThemeId" integer, CONSTRAINT "PK_8f72b95aa2f8ba82cf95dc7579e" PRIMARY KEY ("id"))`,
     );
     await queryRunner.query(
       `ALTER TABLE "form_theme" ADD CONSTRAINT "FK_62de4c0b3240f184e654d8619cc" FOREIGN KEY ("userId") REFERENCES "user"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`,

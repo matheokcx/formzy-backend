@@ -22,7 +22,7 @@ export class Form {
   @Column({ nullable: true })
   description: string;
 
-  @Column('simple-json')
+  @Column('jsonb')
   fields: any;
 
   @Column()
