@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { FormReplyService } from './form-reply.service';
 import { CreateFormReplyDto } from './dto/create-form-reply.dto';
 import { UpdateFormReplyDto } from './dto/update-form-reply.dto';
@@ -23,7 +31,10 @@ export class FormReplyController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateFormReplyDto: UpdateFormReplyDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateFormReplyDto: UpdateFormReplyDto,
+  ) {
     return this.formReplyService.update(+id, updateFormReplyDto);
   }
 

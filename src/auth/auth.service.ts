@@ -36,24 +36,22 @@ export class AuthService {
     };
   }
 
-  async signup(dto: SignupDto) {
+  async signup(dto: SignupDto): Promise<User> {
     const hashedPassword: string = await bcrypt.hash(dto.password, 10);
-    const { password, ...newUser }: User = await this.usersService.create({
+
+    return await this.usersService.create({
       ...dto,
       password: hashedPassword,
     });
-
-    return newUser;
   }
 
-  async getProfile(id: number) {
+  async getProfile(id: number): Promise<User> {
     const user: User | null = await this.usersService.findOne(id);
 
     if (!user) {
       throw new UnauthorizedException();
     }
 
-    const { password, ...profile } = user;
-    return profile;
+    return user;
   }
 }

@@ -5,6 +5,7 @@ import { UpdateFormThemeDto } from './dto/update-form-theme.dto';
 @Injectable()
 export class FormThemeService {
   create(createFormThemeDto: CreateFormThemeDto) {
+    console.log(createFormThemeDto);
     return 'This action adds a new formTheme';
   }
 
@@ -17,6 +18,7 @@ export class FormThemeService {
   }
 
   update(id: number, updateFormThemeDto: UpdateFormThemeDto) {
+    console.log(updateFormThemeDto);
     return `This action updates a #${id} formTheme`;
   }
 

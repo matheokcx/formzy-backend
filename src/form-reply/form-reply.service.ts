@@ -5,6 +5,7 @@ import { UpdateFormReplyDto } from './dto/update-form-reply.dto';
 @Injectable()
 export class FormReplyService {
   create(createFormReplyDto: CreateFormReplyDto) {
+    console.log(createFormReplyDto);
     return 'This action adds a new formReply';
   }
 
@@ -17,6 +18,7 @@ export class FormReplyService {
   }
 
   update(id: number, updateFormReplyDto: UpdateFormReplyDto) {
+    console.log(updateFormReplyDto);
     return `This action updates a #${id} formReply`;
   }
 

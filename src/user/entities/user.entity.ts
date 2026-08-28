@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import { Form } from '../../form/entities/form.entity';
 import {
   Column,
@@ -22,10 +23,11 @@ export class User {
   @Column()
   fullName: string;
 
-  @Column({ unique: true})
+  @Column({ unique: true })
   email: string;
 
-  @Column()
+  @Exclude()
+  @Column({ select: false })
   password: string;
 
   @Column({

@@ -19,7 +19,7 @@ export class FormController {
 
   @Post()
   create(
-    @Request() request: { user: { id: number }},
+    @Request() request: { user: { id: number } },
     @Body() createFormDto: CreateFormDto,
   ) {
     return this.formService.create(createFormDto, request.user);

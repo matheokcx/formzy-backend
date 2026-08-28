@@ -30,7 +30,7 @@ export class AuthController {
   }
 
   @Get('profile')
-  getProfile(@Request() request: { user: { id: number }}) {
+  getProfile(@Request() request: { user: { id: number } }) {
     return this.authService.getProfile(request.user.id);
   }
 }
