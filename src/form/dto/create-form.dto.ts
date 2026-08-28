@@ -18,7 +18,7 @@ export class CreateFormDto {
 
   @IsDefined()
   @IsJSON()
-  fields: Record<string, any>;
+  fields: any;
 
   @IsDefined()
   @IsBoolean()

@@ -1,19 +1,29 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { CreateFormDto } from './dto/create-form.dto';
 import { UpdateFormDto } from './dto/update-form.dto';
 import { Form } from './entities/form.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { User } from '../user/entities/user.entity';
+import { UserService } from '../user/user.service';
 
 @Injectable()
 export class FormService {
   constructor(
     @InjectRepository(Form) private formsRepository: Repository<Form>,
+    private userService: UserService,
   ) {}
 
-  async create(createFormDto: CreateFormDto) {
+  async create(createFormDto: CreateFormDto, user: any) {
+    const currentUser: User | null = await this.userService.findOne(user.sub);
+
+    if (!currentUser) {
+      throw new UnauthorizedException();
+    }
+
     const newForm: Form = this.formsRepository.create(createFormDto);
-    await this.formsRepository.save(newForm);
+    newForm.user = currentUser;
+    return await this.formsRepository.save(newForm);
   }
 
   async findAll(): Promise<Form[]> {
