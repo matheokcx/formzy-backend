@@ -10,7 +10,6 @@ import {
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { Public } from './auth.guard';
-import { User } from '../user/entities/user.entity';
 import { SignupDto } from './dto/signup.dto';
 
 @Controller('auth')
@@ -31,7 +30,7 @@ export class AuthController {
   }
 
   @Get('profile')
-  getProfile(@Request() request: { user: User }) {
-    return request.user;
+  getProfile(@Request() request: { user: { id: number }}) {
+    return this.authService.getProfile(request.user.id);
   }
 }

@@ -1,10 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { CreateFormDto } from './dto/create-form.dto';
 import { UpdateFormDto } from './dto/update-form.dto';
 import { Form } from './entities/form.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from '../user/entities/user.entity';
 import { UserService } from '../user/user.service';
 
 @Injectable()
@@ -14,20 +13,33 @@ export class FormService {
     private userService: UserService,
   ) {}
 
-  async create(createFormDto: CreateFormDto, user: any) {
-    const currentUser: User | null = await this.userService.findOne(user.sub);
-
-    if (!currentUser) {
-      throw new UnauthorizedException();
-    }
-
-    const newForm: Form = this.formsRepository.create(createFormDto);
-    newForm.user = currentUser;
+  async create(createFormDto: CreateFormDto, user: { id: number }) {
+    const newForm: Form = this.formsRepository.create({
+      ...createFormDto,
+      user: { id: user.id },
+    });
     return await this.formsRepository.save(newForm);
   }
 
-  async findAll(): Promise<Form[]> {
-    return await this.formsRepository.find();
+  async findAll(page: number): Promise<Form[]> {
+    return await this.formsRepository
+      .createQueryBuilder('form')
+      .leftJoinAndSelect('form.user', 'user')
+      .leftJoinAndSelect('form.formTheme', 'formTheme')
+      .limit(20)
+      .offset(20 * (page - 1))
+      .getMany();
+  }
+
+  async findUserForms(id: number, page: number): Promise<Form[]> {
+    return await this.formsRepository
+      .createQueryBuilder('form')
+      .leftJoinAndSelect('form.user', 'user')
+      .leftJoinAndSelect('form.formTheme', 'formTheme')
+      .where('user.id = :id', { id })
+      .limit(15)
+      .offset(15 * (page - 1))
+      .getMany();
   }
 
   async findOne(id: number): Promise<Form | null> {

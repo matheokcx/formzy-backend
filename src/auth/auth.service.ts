@@ -26,7 +26,10 @@ export class AuthService {
       throw new UnauthorizedException();
     }
 
-    const payload = { sub: user.id, username: user.fullName };
+    const payload = {
+      id: user.id,
+      fullName: user.fullName,
+    };
 
     return {
       token: await this.jwtService.signAsync(payload),
@@ -41,5 +44,16 @@ export class AuthService {
     });
 
     return newUser;
+  }
+
+  async getProfile(id: number) {
+    const user: User | null = await this.usersService.findOne(id);
+
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+
+    const { password, ...profile } = user;
+    return profile;
   }
 }
