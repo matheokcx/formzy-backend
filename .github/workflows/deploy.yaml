@@ -79,12 +79,13 @@ jobs:
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
           DB_NAME: ${{ secrets.DB_NAME }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_SSH_PORT }}
-          envs: GHCR_TOKEN,APP_URL,DB_USER,DB_PASSWORD,DB_NAME
+          envs: GHCR_TOKEN,APP_URL,DB_USER,DB_PASSWORD,DB_NAME,JWT_SECRET
           script: |
             set -e
             mkdir -p "${{ secrets.VPS_APP_PATH }}"
@@ -92,14 +93,13 @@ jobs:
 
             cat > .env <<EOF
             PORT=3000
-            HOST=0.0.0.0
             NODE_ENV=production
-            APP_URL=${APP_URL}
             DB_HOST=postgres-db
             DB_PORT=5432
             DB_USER=${DB_USER}
             DB_PASSWORD=${DB_PASSWORD}
             DB_NAME=${DB_NAME}
+            JWT_SECRET=${JWT_SECRET}
             EOF
 
             echo "${GHCR_TOKEN}" | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
