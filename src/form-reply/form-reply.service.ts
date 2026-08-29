@@ -1,28 +1,55 @@
-import { Injectable } from '@nestjs/common';
+import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateFormReplyDto } from './dto/create-form-reply.dto';
 import { UpdateFormReplyDto } from './dto/update-form-reply.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { FormReply } from './entities/form-reply.entity';
 
 @Injectable()
 export class FormReplyService {
-  create(createFormReplyDto: CreateFormReplyDto) {
-    console.log(createFormReplyDto);
-    return 'This action adds a new formReply';
+  constructor(
+    @InjectRepository(FormReply)
+    private formRepliesRepository: Repository<FormReply>,
+  ) {}
+
+  async create(
+    createFormReplyDto: CreateFormReplyDto,
+    ipAddress: string,
+  ): Promise<FormReply> {
+    const ipHash: string = `${ipAddress}`;
+    const hasAlreadyReplied: FormReply | null =
+      await this.formRepliesRepository.findOneBy({
+        form: { id: createFormReplyDto.formId },
+        ipHash: ipHash,
+      });
+
+    if (hasAlreadyReplied) {
+      throw new ConflictException('Vous avez déjà répondu à ce formulaire.');
+    }
+
+    const newReply: FormReply = this.formRepliesRepository.create({
+      ...createFormReplyDto,
+      ipHash,
+      form: { id: createFormReplyDto.formId },
+    });
+    return await this.formRepliesRepository.save(newReply);
   }
 
-  findAll() {
-    return `This action returns all formReply`;
+  async findAllForForm(formId: number, page: number): Promise<FormReply[]> {
+    return await this.formRepliesRepository
+      .createQueryBuilder('formReply')
+      .leftJoin('formReply.form', 'form')
+      .where('form.id = :id', { id: formId })
+      .limit(20)
+      .offset(15 * (page - 1))
+      .getMany();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} formReply`;
+  async findOne(id: number): Promise<FormReply | null> {
+    return this.formRepliesRepository.findOneBy({ id });
   }
 
-  update(id: number, updateFormReplyDto: UpdateFormReplyDto) {
-    console.log(updateFormReplyDto);
-    return `This action updates a #${id} formReply`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} formReply`;
+  async update(id: number, updateFormReplyDto: UpdateFormReplyDto) {
+    await this.formRepliesRepository.update(id, updateFormReplyDto);
   }
 }

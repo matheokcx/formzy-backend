@@ -5,11 +5,12 @@ info:
 
 http:
   method: POST
-  url: "{{base-url}}/form-replie/1"
+  url: "{{base-url}}/form-reply"
   body:
     type: json
     data: |
       {
+        "formId": 12,
         "replies": {
           "champ_1": "Test"
         }

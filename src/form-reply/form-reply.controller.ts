@@ -5,24 +5,33 @@ import {
   Body,
   Patch,
   Param,
-  Delete,
+  Query,
+  Ip,
 } from '@nestjs/common';
 import { FormReplyService } from './form-reply.service';
 import { CreateFormReplyDto } from './dto/create-form-reply.dto';
 import { UpdateFormReplyDto } from './dto/update-form-reply.dto';
+import { Public } from '../auth/auth.guard';
 
 @Controller('form-reply')
 export class FormReplyController {
   constructor(private readonly formReplyService: FormReplyService) {}
 
   @Post()
-  create(@Body() createFormReplyDto: CreateFormReplyDto) {
-    return this.formReplyService.create(createFormReplyDto);
+  @Public()
+  create(
+    @Ip() ipAddress: string,
+    @Body() createFormReplyDto: CreateFormReplyDto,
+  ) {
+    return this.formReplyService.create(createFormReplyDto, ipAddress);
   }
 
-  @Get()
-  findAll() {
-    return this.formReplyService.findAll();
+  @Get('form/:id')
+  findAll(@Param('id') id: string, @Query('page') page: string | undefined) {
+    return this.formReplyService.findAllForForm(
+      Number(id),
+      page ? Number(page) : 1,
+    );
   }
 
   @Get(':id')
@@ -36,10 +45,5 @@ export class FormReplyController {
     @Body() updateFormReplyDto: UpdateFormReplyDto,
   ) {
     return this.formReplyService.update(+id, updateFormReplyDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.formReplyService.remove(+id);
   }
 }
