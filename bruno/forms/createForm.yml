@@ -1,0 +1,29 @@
+info:
+  name: createForm
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{base-url}}/form"
+  body:
+    type: json
+    data: |
+      {
+        "name": "Deuxième formulaire",
+        "description": "Voici la description de mon formulaire",
+        "fields": {
+          "champ_1": {
+            "label": "Champ 1"
+          }
+        },
+        "isPrivate": false
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: true
