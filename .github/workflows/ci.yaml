@@ -8,7 +8,6 @@ jobs:
   lint:
     runs-on: ubuntu-24.04
     timeout-minutes: 15
-    needs: [typecheck]
     steps:
       - uses: actions/checkout@v4
 

@@ -75,47 +75,31 @@ jobs:
         uses: appleboy/ssh-action@v1.2.0
         env:
           GHCR_TOKEN: ${{ secrets.GHCR_TOKEN }}
-          APP_KEY: ${{ secrets.APP_KEY }}
           APP_URL: ${{ vars.APP_URL }}
-          CORS_ORIGIN: ${{ vars.CORS_ORIGIN }}
           DB_USER: ${{ secrets.DB_USER }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          MAIL_FROM_NAME: ${{ vars.MAIL_FROM_NAME }}
-          MAIL_FROM_ADDRESS: ${{ vars.MAIL_FROM_ADDRESS }}
+          DB_NAME: ${{ secrets.DB_NAME }}
         with:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_SSH_PORT }}
-          envs: GHCR_TOKEN,APP_KEY,APP_URL,CORS_ORIGIN,DB_USER,DB_PASSWORD,DB_DATABASE,MAIL_FROM_NAME,MAIL_FROM_ADDRESS,RESEND_API_KEY
+          envs: GHCR_TOKEN,APP_URL,DB_USER,DB_PASSWORD,DB_NAME
           script: |
             set -e
             mkdir -p "${{ secrets.VPS_APP_PATH }}"
             cd "${{ secrets.VPS_APP_PATH }}"
 
             cat > .env <<EOF
-            TZ=UTC
-            PORT=3333
+            PORT=3000
             HOST=0.0.0.0
             NODE_ENV=production
-            LOG_LEVEL=info
-            APP_KEY=${APP_KEY}
             APP_URL=${APP_URL}
-            CORS_ORIGIN=${CORS_ORIGIN}
-            SESSION_DRIVER=cookie
-            DRIVE_DISK=fs
             DB_HOST=postgres-db
             DB_PORT=5432
             DB_USER=${DB_USER}
             DB_PASSWORD=${DB_PASSWORD}
-            DB_DATABASE=${DB_DATABASE}
-            LIMITER_STORE=database
-            MAIL_MAILER=smtp
-            MAIL_FROM_NAME=${MAIL_FROM_NAME}
-            MAIL_FROM_ADDRESS=${MAIL_FROM_ADDRESS}
-            SMTP_HOST=localhost
-            SMTP_PORT=587
+            DB_NAME=${DB_NAME}
             EOF
 
             echo "${GHCR_TOKEN}" | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
