@@ -19,7 +19,7 @@ export class FormReply {
   ipHash: string;
 
   @Column('jsonb')
-  replies: any;
+  replies: string;
 
   @ManyToOne(() => Form, (form) => form.formReplies)
   form: Form;
