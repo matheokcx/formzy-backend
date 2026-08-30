@@ -1,11 +1,11 @@
 info:
-  name: getAllFormRepliesByID
+  name: getAllFormReplies
   type: http
   seq: 1
 
 http:
   method: GET
-  url: "{{base-url}}/form-reply/1"
+  url: "{{base-url}}/form-reply/form/12"
   auth: inherit
 
 settings:

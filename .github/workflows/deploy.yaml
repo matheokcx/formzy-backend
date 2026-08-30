@@ -84,7 +84,7 @@ jobs:
           username: ${{ secrets.VPS_USER }}
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_SSH_PORT }}
-          envs: GHCR_TOKEN,DB_USER,DB_PASSWORD,DB_NAME,JWT_SECRET
+          envs: GHCR_TOKEN,DB_USER,DB_PASSWORD,DB_NAME,JWT_SECRET,IP_HASH_SECRET
           script: |
             set -e
             mkdir -p "${{ secrets.VPS_APP_PATH }}"
@@ -99,6 +99,7 @@ jobs:
             DB_PASSWORD=${DB_PASSWORD}
             DB_NAME=${DB_NAME}
             JWT_SECRET=${JWT_SECRET}
+            IP_HASH_SECRET=${IP_HASH_SECRET}
             EOF
 
             echo "${GHCR_TOKEN}" | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
