@@ -36,6 +36,7 @@ export class FormService {
       .createQueryBuilder('form')
       .leftJoinAndSelect('form.user', 'user')
       .leftJoinAndSelect('form.formTheme', 'formTheme')
+      .leftJoinAndSelect('form.formReplies', 'formReplies')
       .where('user.id = :id', { id })
       .limit(15)
       .offset(15 * (page - 1))

@@ -10,6 +10,7 @@ import {
 import { User } from '../../user/entities/user.entity';
 import { FormTheme } from '../../form-theme/entities/form-theme.entity';
 import { FormReply } from '../../form-reply/entities/form-reply.entity';
+import { Transform } from 'class-transformer';
 
 @Entity()
 export class Form {
@@ -23,6 +24,11 @@ export class Form {
   description: string;
 
   @Column('jsonb')
+  @Transform(({ value }: { value: unknown }) =>
+    typeof value === 'string'
+      ? (JSON.parse(value) as Record<string, any>)
+      : value,
+  )
   fields: any;
 
   @Column()
