@@ -12,11 +12,7 @@ http:
       {
         "name": "Deuxième formulaire",
         "description": "Voici la description de mon formulaire",
-        "fields": {
-          "champ_1": {
-            "label": "Champ 1"
-          }
-        },
+        "fields": "{\"champ_1\": {\"label\": \"Premier champ\"}}",
         "isPrivate": false
       }
   auth: inherit
