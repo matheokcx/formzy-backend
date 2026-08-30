@@ -1,0 +1,11 @@
+name: prod
+color: "#CE4F3B"
+variables:
+  - name: base-url
+    value: https://formzy.fr/api
+  - name: email
+    value: matheo.deleplanque@gmail.com
+  - secret: true
+    name: password
+  - secret: true
+    name: token

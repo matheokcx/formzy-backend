@@ -12,6 +12,7 @@ import {
 import { FormService } from './form.service';
 import { CreateFormDto } from './dto/create-form.dto';
 import { UpdateFormDto } from './dto/update-form.dto';
+import { Public } from '../auth/auth.guard';
 
 @Controller('form')
 export class FormController {
@@ -39,6 +40,7 @@ export class FormController {
   }
 
   @Get(':id')
+  @Public()
   findOne(@Param('id') id: string) {
     return this.formService.findOne(+id);
   }

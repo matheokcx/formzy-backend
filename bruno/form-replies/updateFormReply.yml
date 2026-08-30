@@ -1,0 +1,22 @@
+info:
+  name: updateFormReply
+  type: http
+  seq: 3
+
+http:
+  method: PATCH
+  url: "{{base-url}}/form-reply/16"
+  body:
+    type: json
+    data: |
+      {
+        "replies": "{\"champ_1\": \"Modifiécytyc\"}"
+      }
+  auth: inherit
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

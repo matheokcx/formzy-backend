@@ -1,3 +1,4 @@
+import { Exclude } from 'class-transformer';
 import {
   Column,
   CreateDateColumn,
@@ -13,11 +14,12 @@ export class FormReply {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Exclude()
+  @Column({ select: false })
   ipHash: string;
 
   @Column('jsonb')
-  replies: any;
+  replies: string;
 
   @ManyToOne(() => Form, (form) => form.formReplies)
   form: Form;
