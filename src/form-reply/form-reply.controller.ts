@@ -7,6 +7,7 @@ import {
   Param,
   Query,
   Ip,
+  Delete,
 } from '@nestjs/common';
 import { FormReplyService } from './form-reply.service';
 import { CreateFormReplyDto } from './dto/create-form-reply.dto';
@@ -40,10 +41,18 @@ export class FormReplyController {
   }
 
   @Patch(':id')
+  @Public()
   update(
     @Param('id') id: string,
+    @Ip() ipAddress: string,
     @Body() updateFormReplyDto: UpdateFormReplyDto,
   ) {
-    return this.formReplyService.update(+id, updateFormReplyDto);
+    return this.formReplyService.update(+id, updateFormReplyDto, ipAddress);
+  }
+
+  @Delete(':id')
+  @Public()
+  remove(@Param('id') id: string) {
+    return this.formReplyService.remove(+id);
   }
 }
