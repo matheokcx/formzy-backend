@@ -21,7 +21,7 @@ export class FormReply {
   @Column('jsonb')
   replies: string;
 
-  @ManyToOne(() => Form, (form) => form.formReplies)
+  @ManyToOne(() => Form, (form) => form.formReplies, { onDelete: 'CASCADE' })
   form: Form;
 
   @CreateDateColumn()
